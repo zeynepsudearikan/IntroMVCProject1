@@ -1,0 +1,33 @@
+﻿@model Book
+
+@functions {
+    public string GetRemainingDaysColor(DateTime dueDate)
+    {
+        TimeSpan difference = dueDate.Subtract(DateTime.Today); // Bugünkü tarih ile dueDate arasındaki fark
+        int remainingDays = difference.Days; // Farkı güne dönüştürme
+
+        if (remainingDays < 0)
+            return "red"; // Late
+        else
+            return "green";
+    }
+}
+
+<div>
+    <h2>Book Information</h2>
+    <div>
+        <span>Name: </span><span>@Model.Name</span>
+    </div>
+    <div>
+        <span>Author: </span><span>@Model.Author</span>
+    </div>
+    <div>
+        <span>Page Number: </span><span>@Model.pageNumber</span>
+    </div>
+    <div>
+        <span>Due Date: </span><span>@Model.dueDate.ToShortDateString()</span>
+    </div>
+    <div>
+        <span>Days Remaining: </span><span style="color: @GetRemainingDaysColor(Model.dueDate)">@((Model.dueDate - DateTime.Today).Days)</span>
+    </div>
+</div>
